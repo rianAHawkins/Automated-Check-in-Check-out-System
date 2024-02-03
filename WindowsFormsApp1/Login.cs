@@ -14,6 +14,7 @@ namespace WindowsFormsApp1
 {
     public partial class Login : Form
     {
+        Employee employee;
         public Login()
         {
             InitializeComponent();
@@ -26,6 +27,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Loggin in :)");
                 this.Hide();
                 var main = new Main();
+                main.SetEmployee(employee);
                 main.Closed += (s, args) => this.Close();
                 main.Show();
             }
@@ -38,33 +40,8 @@ namespace WindowsFormsApp1
 
         private bool auth()
         {
-            //GB_ManufacturingTablesTableAdapters.EmployeeTableAdapter
-            using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=\"GB Manufacturing\";Integrated Security=True"))
-            {
-                string queryString = "SELECT * FROM Employee WHERE EmployeeID = @EmployeeID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@EmployeeID", txtEmployeeID.Text);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                try
-                {
-                    while (reader.Read())
-                    {
-                        String passWord = reader["Password"].ToString().Trim();
-                        Console.WriteLine(passWord);// etc
-                        if(passWord == txtPassword.Text)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                finally
-                {
-                    // Always call Close when done reading.
-                    reader.Close();
-                }
-            }
-                return false;
+            employee = new Employee(txtEmployeeID.Text);
+            return employee.getDBEmployee(txtPassword.Text);
         }
     }
 }

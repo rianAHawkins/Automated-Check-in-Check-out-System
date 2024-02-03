@@ -12,9 +12,17 @@ namespace WindowsFormsApp1
 {
     public partial class Main : Form
     {
+        Employee employee;
         public Main()
         {
             InitializeComponent();
         }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            // employee.refreshRoles();
+        }
+
+        public void SetEmployee(Employee employee) => this.employee = employee;
     }
 }
