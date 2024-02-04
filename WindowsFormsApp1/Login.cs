@@ -14,7 +14,7 @@ namespace WindowsFormsApp1
 {
     public partial class Login : Form
     {
-        Employee employee;
+        public EmployeeModel employee;
         public Login()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace WindowsFormsApp1
 
         private bool auth()
         {
-            employee = new Employee(txtEmployeeID.Text);
+            employee = new EmployeeModel(txtEmployeeID.Text);
             return employee.getDBEmployee(txtPassword.Text);
         }
     }

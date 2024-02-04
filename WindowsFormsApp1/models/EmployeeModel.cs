@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    public class Employee
+    public class EmployeeModel
     {
         private String EmployeeID;
         private String Fname;
         private String Lname;
         private DateTime HireDate;
-        private List<String> roles;
+        private List<String> Roles;
 
-        public Employee(String EmployeeID)
+        public EmployeeModel(String EmployeeID)
         {
             this.EmployeeID = EmployeeID;
         }
@@ -56,7 +56,7 @@ namespace WindowsFormsApp1
     
         public void refreshRoles()
         {
-            roles.Clear();
+            Roles.Clear();
             //GB_ManufacturingTablesTableAdapters.EmployeeTableAdapter
             using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=\"GB Manufacturing\";Integrated Security=True"))
             {
@@ -71,7 +71,7 @@ namespace WindowsFormsApp1
                     {
                         //String passWord = reader["Password"].ToString().Trim();
                         //Console.WriteLine(passWord);// etc
-                        roles.Add(reader["Role"].ToString().Trim());
+                        Roles.Add(reader["Role"].ToString().Trim());
                     }
                 }
                 finally
@@ -81,5 +81,35 @@ namespace WindowsFormsApp1
                 }
             }
         }
+
+
+        // properties
+
+        public string employeeID
+        {
+            get { return EmployeeID; }
+            set { EmployeeID = value; }
+        }
+        public string fname
+        {
+            get { return Fname; }
+            set { Fname = value; }
+        }
+        public string lname
+        {
+            get { return Lname; }
+            set { Lname = value; }
+        }
+        public DateTime hireDate
+        {
+            get { return HireDate; }
+            set { HireDate = value; }
+        }
+        public List<String> roles
+        {
+            get { return Roles; }
+            set { Roles = value; }
+        }
+
     }
 }
