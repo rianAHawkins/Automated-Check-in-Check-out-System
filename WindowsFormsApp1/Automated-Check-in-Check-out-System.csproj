@@ -52,6 +52,7 @@
       <DependentUpon>GB_ManufacturingTables.xsd</DependentUpon>
     </Compile>
     <Compile Include="models\AnnouncementModel.cs" />
+    <Compile Include="models\BuildingModel.cs" />
     <Compile Include="models\EmployeeModel.cs" />
     <Compile Include="Inventory.cs">
       <SubType>Form</SubType>
@@ -73,6 +74,8 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="models\ItemStatusModel.cs" />
+    <Compile Include="models\ItemTypeModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
