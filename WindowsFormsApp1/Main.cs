@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.ADO;
 using WindowsFormsApp1.models;
 
 namespace WindowsFormsApp1
 {
     public partial class Main : Form
     {
-        EmployeeModel employee;
+        Employee employee;
         AnnouncementModel announcement;
         public Main()
         {
@@ -24,7 +25,24 @@ namespace WindowsFormsApp1
         {
             // employee.refreshRoles();
             // db.get roles
-            lblEID.Text = "EID: "+ employee.employeeID.ToString().Trim().ToUpper();
+            lblEID.Text = "EID: "+ employee.EmployeeID.ToString().Trim().ToUpper();
+
+            using (Entity db = new Entity())
+            {
+                DateTime oneMonthAgo = DateTime.Today.AddMonths(-1);
+                var AList = db.Announcements.Where(a => a.created > oneMonthAgo)
+                .ToList();
+                String strAnnounce = "";
+                foreach (Announcement announcement in AList) 
+                {
+                    strAnnounce += "BY: " + announcement.EmployeeID.Trim();
+                    strAnnounce += "\n [" + announcement.val.Trim() + "] ";
+                    strAnnounce += "\nCreated on: " + announcement.created + "\n\n";
+                }
+                txtAnouncements.Text = strAnnounce;
+            }
+
+            /*
             getAnnouncements();
             String announce = "";
             for (int i =0; i < announcement.Id.Count; i++)
@@ -36,13 +54,16 @@ namespace WindowsFormsApp1
             }
             txtAnouncements.Text = announce;
             //lblAnnouncements.Text = "HI "+ employee.fname+ "\n Announcements";
+            */
         }
 
+        /*
         private void getAnnouncements()
         {
             announcement= new AnnouncementModel();
             announcement.getAnnouncement();            
         }
+        */
 
         private void View_Visibile(List<String> roles)
         {
@@ -63,15 +84,11 @@ namespace WindowsFormsApp1
             }
         }
 
-        public void SetEmployee(EmployeeModel employee) => this.employee = employee;
+        public void SetEmployee(Employee employee) => this.employee = employee;
 
         private void tsmiInventory_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            var nextForm = new Inventory();
-            nextForm.SetEmployee(employee);
-            nextForm.Closed += (s, args) => this.Show();
-            nextForm.Show();
+            nextView(0);
         }
 
         private void tsmiTask_Click(object sender, EventArgs e)
@@ -83,6 +100,27 @@ namespace WindowsFormsApp1
         {
 
         }
+
+        
+        private void nextView(int i)
+        {
+            this.Hide();
+            Form nextForm;
+            switch(i)
+            {
+                case 0: 
+                    nextForm = new Inventory(employee);
+                    break;
+                //case 1: nextForm = new Inventory(); break;
+                //case 2: nextForm = new Inventory(); break;
+                default:
+                        nextForm = new Form();
+                    break;
+            }
+            nextForm.Closed += (s, args) => this.Show();
+            nextForm.Show();
+        }
+        
 
     }
 }
