@@ -31,7 +31,10 @@ namespace WindowsFormsApp1.Properties {
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
+        public static string InvalidPasswordHasherIterationCount { get; internal set; }
+        public static string InvalidPasswordHasherCompatibilityMode { get; internal set; }
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
