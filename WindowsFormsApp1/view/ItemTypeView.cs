@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.ADO;
 
@@ -25,9 +18,10 @@ namespace WindowsFormsApp1
             try
             {
                 min = int.Parse(txtMin.Text);
-                validated= true;
+                validated = true;
             }
-            catch { 
+            catch
+            {
                 validated = false;
                 MessageBox.Show("Please enter a valid Integer");
                 txtMin.Focus();
@@ -45,14 +39,14 @@ namespace WindowsFormsApp1
             using (Entity db = new Entity())
             {
                 ItemType itemType = db.ItemTypes.Create();
-                itemType.name= txtName.Text;
-                itemType.description= txtDescription.Text;
+                itemType.name = txtName.Text;
+                itemType.description = txtDescription.Text;
                 itemType.min = min;
                 db.ItemTypes.Add(itemType);
                 db.SaveChanges();
                 MessageBox.Show("SAVED");
             }
-            
+
         }
     }
 }

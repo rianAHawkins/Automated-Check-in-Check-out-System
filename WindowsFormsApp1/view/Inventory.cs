@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.ADO;
-using WindowsFormsApp1.models;
 
 namespace WindowsFormsApp1
 {
@@ -17,9 +12,8 @@ namespace WindowsFormsApp1
     {
         Employee employee;
         List<Building> lsBuilding = new List<Building>();
-        List<ItemStatus> lsItemStatus = new List<ItemStatus>();
+        List<ItemStatu> lsItemStatus = new List<ItemStatu>();
         List<ItemType> lsItemTypes = new List<ItemType>();
-        InventoryModel inventory;
         public Inventory(Employee employee)
         {
             InitializeComponent();
@@ -29,25 +23,35 @@ namespace WindowsFormsApp1
         private void Inventory_Load(object sender, EventArgs e)
         {
             //Console.WriteLine("name["+employee.fname+"]");
-            //lblName.Text = employee.fname +" "+ employee.lname;
-            inventory = new InventoryModel();
-            loadData();            
+            //lblName.Text = employee.fname +" "+ employee.lname;            
+            loadData();
+        }
+        private void clearData()
+        {
+            lsBuilding.Clear();
+            lsItemStatus.Clear();
+            lsItemTypes.Clear();
+            cbBuilding.Items.Clear();
+            cbStatus.Items.Clear();
+            cbType.Items.Clear();
+
         }
 
         private void loadData()
         {
+            clearData();
             using (Entity db = new Entity())
             {
                 // loadBuilding
                 lsBuilding = db.Buildings.ToList();
                 foreach (Building building in lsBuilding)
                 {
-                    cbBuilding.Items.Add(building.Name.Trim());                    
+                    cbBuilding.Items.Add(building.Name.Trim());
                 }
 
                 // loadStatus
                 lsItemStatus = db.ItemStatus.ToList();
-                foreach (ItemStatus itemStatus in lsItemStatus)
+                foreach (ItemStatu itemStatus in lsItemStatus)
                 {
                     cbStatus.Items.Add(itemStatus.Status.Trim());
                 }
@@ -88,8 +92,8 @@ namespace WindowsFormsApp1
                 AList = db.Items.Where(a =>
                 (a.BuildingID == cbBuilding.SelectedIndex || cbBuilding.SelectedIndex == -1)
                 &&
-                (a.itemStatusID == cbStatus.SelectedIndex || cbStatus.SelectedIndex==-1) 
-                && 
+                (a.itemStatusID == cbStatus.SelectedIndex || cbStatus.SelectedIndex == -1)
+                &&
                 (a.itemTypeID == cbType.SelectedIndex || cbType.SelectedIndex == -1)
                 ).ToList();
                 bool bl = false;
@@ -103,8 +107,8 @@ namespace WindowsFormsApp1
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            Item sitem = ((SmartButton) sender).sitem;
-            var itemEdit = new ItemDetails(lsBuilding,lsItemStatus,lsItemTypes, sitem);
+            Item sitem = ((SmartButton)sender).sitem;
+            var itemEdit = new ItemDetails(lsBuilding, lsItemStatus, lsItemTypes, sitem);
             //itemEdit.Closed += (s, args) => this.Close();            
             itemEdit.Show();
         }
@@ -112,28 +116,29 @@ namespace WindowsFormsApp1
         private void itemLoad(Item item, bool blue)
         {
             FlowLayoutPanel pnl = new FlowLayoutPanel();
-            pnl.Width= 740;
-            pnl.Height= 40;
+            pnl.Width = 740;
+            pnl.Height = 40;
             pnl.BackColor = Color.MintCream;
-            if (blue){pnl.BackColor = Color.LightGreen;}
+            if (blue) { pnl.BackColor = Color.LightGreen; }
 
             Button btn = new SmartButton(item);
             btn.Text = "Edit";
             btn.Click += btnEdit_Click;
             pnl.Controls.Add(btn);
 
-            pnl.Controls.Add(easyLabel("ID: " + item.ID));            
-            pnl.Controls.Add(easyLabel("Building: " + item.Building.Name));
-            pnl.Controls.Add(easyLabel("Type: " + lsItemTypes[(int)item.itemTypeID].name));
-            pnl.Controls.Add(easyLabel("Status: " + lsItemStatus[(int)item.itemStatusID].Status));
+            pnl.Controls.Add(easyLabel("ID: " + item.ID));
+            pnl.Controls.Add(easyLabel("Building: " + item.Building.Name.Trim()));
+            pnl.Controls.Add(easyLabel("Type: " + item.ItemType.name.Trim()));
+            pnl.Controls.Add(easyLabel("Status: " + item.ItemStatu.Status.Trim()));
 
             flpInventory.Controls.Add(pnl);
         }
 
-        protected class SmartButton:Button
+        protected class SmartButton : Button
         {
             public Item sitem;
-            public SmartButton(Item item):base(){
+            public SmartButton(Item item) : base()
+            {
                 this.sitem = item;
             }
         }
@@ -160,7 +165,7 @@ namespace WindowsFormsApp1
         private void btnOrder_Click(object sender, EventArgs e)
         {
             var itemEdit = new ItemDetails(lsBuilding, lsItemStatus, lsItemTypes);
-            itemEdit.Closed += (s, args) => this.loadData();            
+            itemEdit.Closed += (s, args) => this.loadData();
             itemEdit.Show();
         }
     }

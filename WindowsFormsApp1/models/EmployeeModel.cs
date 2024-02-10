@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
@@ -53,7 +50,7 @@ namespace WindowsFormsApp1
             }
             return false;
         }
-    
+
         public void refreshRoles()
         {
             Roles.Clear();

@@ -13,6 +13,8 @@ namespace WindowsFormsApp1.ADO
         public Employee()
         {
             Announcements = new HashSet<Announcement>();
+            EmployeeRoles = new HashSet<EmployeeRole>();
+            EmployeeSkills = new HashSet<EmployeeSkill>();
         }
 
         [StringLength(10)]
@@ -35,5 +37,11 @@ namespace WindowsFormsApp1.ADO
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Announcement> Announcements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeRole> EmployeeRoles { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeSkill> EmployeeSkills { get; set; }
     }
 }

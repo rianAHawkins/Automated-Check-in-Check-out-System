@@ -13,6 +13,7 @@ namespace WindowsFormsApp1.ADO
         public Building()
         {
             Items = new HashSet<Item>();
+            Tasks = new HashSet<Task>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -28,5 +29,8 @@ namespace WindowsFormsApp1.ADO
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace WindowsFormsApp1.models
 {
 
     public class AnnouncementModel
-    {    
+    {
         private List<int> id = new List<int>();
         private List<String> EmployeeID = new List<string>();
         private List<String> val = new List<string>();
@@ -28,7 +24,7 @@ namespace WindowsFormsApp1.models
             using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=\"GB Manufacturing\";Integrated Security=True"))
             {
                 string queryString = "SELECT * FROM [GB Manufacturing].[dbo].[Announcement]" +
-                    "WHERE DATEPART(m, created) = DATEPART(m, DATEADD(m, -0, getdate()))"+
+                    "WHERE DATEPART(m, created) = DATEPART(m, DATEADD(m, -0, getdate()))" +
                     "AND DATEPART(yyyy, created) = DATEPART(yyyy, DATEADD(m, -0, getdate()))";
 
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -40,10 +36,10 @@ namespace WindowsFormsApp1.models
                     while (reader.Read())
                     {
                         //Console.WriteLine(reader["EmployeeID"].ToString().Trim());
-                        id.Add((int) reader["id"]);
+                        id.Add((int)reader["id"]);
                         EmployeeID.Add(reader["EmployeeID"].ToString().Trim());
                         val.Add(reader["val"].ToString().Trim());
-                        created.Add( (DateTime)reader["created"]);
+                        created.Add((DateTime)reader["created"]);
                     }
                 }
                 finally

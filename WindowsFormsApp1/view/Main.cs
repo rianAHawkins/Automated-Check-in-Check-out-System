@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.ADO;
 using WindowsFormsApp1.models;
@@ -25,7 +21,7 @@ namespace WindowsFormsApp1
         {
             // employee.refreshRoles();
             // db.get roles
-            lblEID.Text = "EID: "+ employee.EmployeeID.ToString().Trim().ToUpper();
+            lblEID.Text = "EID: " + employee.EmployeeID.ToString().Trim().ToUpper();
 
             using (Entity db = new Entity())
             {
@@ -33,7 +29,7 @@ namespace WindowsFormsApp1
                 var AList = db.Announcements.Where(a => a.created > oneMonthAgo)
                 .ToList();
                 String strAnnounce = "";
-                foreach (Announcement announcement in AList) 
+                foreach (Announcement announcement in AList)
                 {
                     strAnnounce += "BY: " + announcement.EmployeeID.Trim();
                     strAnnounce += "\n [" + announcement.val.Trim() + "] ";
@@ -71,7 +67,7 @@ namespace WindowsFormsApp1
             {
                 if (role.ToUpper().Contains("INVENTORY"))
                 {
-                    tsmiInventory.Visible= true;
+                    tsmiInventory.Visible = true;
                 }
                 if (role.ToUpper().Contains("TASK"))
                 {
@@ -93,34 +89,34 @@ namespace WindowsFormsApp1
 
         private void tsmiTask_Click(object sender, EventArgs e)
         {
-
+            nextView(1);
         }
 
         private void tsmiSystem_Click(object sender, EventArgs e)
         {
-
+            nextView(2);
         }
 
-        
+
         private void nextView(int i)
         {
             this.Hide();
             Form nextForm;
-            switch(i)
+            switch (i)
             {
-                case 0: 
+                case 0:
                     nextForm = new Inventory(employee);
                     break;
-                //case 1: nextForm = new Inventory(); break;
-                //case 2: nextForm = new Inventory(); break;
+                case 1: nextForm = new Work(employee); break;
+                case 2: nextForm = new EmployeeDetails(employee); break;
                 default:
-                        nextForm = new Form();
+                    nextForm = new Form();
                     break;
             }
             nextForm.Closed += (s, args) => this.Show();
             nextForm.Show();
         }
-        
+
 
     }
 }

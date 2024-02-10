@@ -6,23 +6,18 @@ namespace WindowsFormsApp1.ADO
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Item")]
-    public partial class Item
+    public partial class TaskItem
     {
         public int ID { get; set; }
 
-        public int? BuildingID { get; set; }
+        public int? TaskID { get; set; }
 
         public int? itemTypeID { get; set; }
 
-        public int? itemStatusID { get; set; }
-
-        public DateTime? updated { get; set; }
-
-        public virtual Building Building { get; set; }
-
-        public virtual ItemStatu ItemStatu { get; set; }
+        public int? Required { get; set; }
 
         public virtual ItemType ItemType { get; set; }
+
+        public virtual Task Task { get; set; }
     }
 }

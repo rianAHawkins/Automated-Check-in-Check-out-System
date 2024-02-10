@@ -6,31 +6,22 @@ namespace WindowsFormsApp1.ADO
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ItemType")]
-    public partial class ItemType
+    public partial class ItemStatu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ItemType()
+        public ItemStatu()
         {
             Items = new HashSet<Item>();
-            TaskItems = new HashSet<TaskItem>();
         }
 
-        public int ID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int id { get; set; }
 
         [Required]
-        [StringLength(25)]
-        public string name { get; set; }
-
-        [StringLength(100)]
-        public string description { get; set; }
-
-        public int? min { get; set; }
+        [StringLength(20)]
+        public string Status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaskItem> TaskItems { get; set; }
     }
 }

@@ -15,10 +15,17 @@ namespace WindowsFormsApp1.ADO
         public virtual DbSet<Announcement> Announcements { get; set; }
         public virtual DbSet<Building> Buildings { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<EmployeeRole> EmployeeRoles { get; set; }
+        public virtual DbSet<EmployeeSkill> EmployeeSkills { get; set; }
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<ItemStatus> ItemStatus { get; set; }
+        public virtual DbSet<ItemStatu> ItemStatus { get; set; }
         public virtual DbSet<ItemType> ItemTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Skill> Skills { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<TaskItem> TaskItems { get; set; }
+        public virtual DbSet<TaskStatu> TaskStatus { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -37,6 +44,11 @@ namespace WindowsFormsApp1.ADO
             modelBuilder.Entity<Building>()
                 .Property(e => e.Address)
                 .IsFixedLength();
+
+            modelBuilder.Entity<Building>()
+                .HasMany(e => e.Tasks)
+                .WithRequired(e => e.Building)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Employee>()
                 .Property(e => e.EmployeeID)
@@ -59,11 +71,19 @@ namespace WindowsFormsApp1.ADO
                 .WithRequired(e => e.Employee)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<ItemStatus>()
+            modelBuilder.Entity<EmployeeRole>()
+                .Property(e => e.EmployeeID)
+                .IsFixedLength();
+
+            modelBuilder.Entity<EmployeeSkill>()
+                .Property(e => e.EmployeeID)
+                .IsFixedLength();
+
+            modelBuilder.Entity<ItemStatu>()
                 .Property(e => e.Status)
                 .IsFixedLength();
 
-            modelBuilder.Entity<ItemStatus>()
+            modelBuilder.Entity<ItemStatu>()
                 .HasMany(e => e.Items)
                 .WithOptional(e => e.ItemStatu)
                 .HasForeignKey(e => e.itemStatusID);
@@ -83,6 +103,37 @@ namespace WindowsFormsApp1.ADO
             modelBuilder.Entity<Role>()
                 .Property(e => e.description)
                 .IsFixedLength();
+
+            modelBuilder.Entity<Skill>()
+                .Property(e => e.Name)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Skill>()
+                .HasMany(e => e.Tasks)
+                .WithRequired(e => e.Skill)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Task>()
+                .Property(e => e.Description)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Task>()
+                .Property(e => e.Address)
+                .IsFixedLength();
+
+            modelBuilder.Entity<TaskStatu>()
+                .Property(e => e.Name)
+                .IsFixedLength();
+
+            modelBuilder.Entity<TaskStatu>()
+                .Property(e => e.Description)
+                .IsFixedLength();
+
+            modelBuilder.Entity<TaskStatu>()
+                .HasMany(e => e.Tasks)
+                .WithRequired(e => e.TaskStatu)
+                .HasForeignKey(e => e.StatusID)
+                .WillCascadeOnDelete(false);
         }
     }
 }

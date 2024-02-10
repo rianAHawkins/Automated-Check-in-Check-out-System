@@ -22,15 +22,5 @@ namespace WindowsFormsApp1.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.;Initial Catalog=\"GB Manufacturing\";Integrated Security=True")]
-        public string GB_ManufacturingConnectionString {
-            get {
-                return ((string)(this["GB_ManufacturingConnectionString"]));
-            }
-        }
     }
 }

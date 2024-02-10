@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.ADO;
 
@@ -14,10 +8,10 @@ namespace WindowsFormsApp1
     public partial class ItemDetails : Form
     {
         List<Building> lsBuilding = new List<Building>();
-        List<ItemStatus> lsItemStatus = new List<ItemStatus>();
+        List<ItemStatu> lsItemStatus = new List<ItemStatu>();
         List<ItemType> lsItemTypes = new List<ItemType>();
         Item item;
-        public ItemDetails(List<Building> buildings, List<ItemStatus> itemStatuses, List<ItemType> itemTypes,Item item)
+        public ItemDetails(List<Building> buildings, List<ItemStatu> itemStatuses, List<ItemType> itemTypes, Item item)
         {
             InitializeComponent();
             lsBuilding = buildings;
@@ -26,7 +20,7 @@ namespace WindowsFormsApp1
             this.item = item;
         }
 
-        public ItemDetails(List<Building> buildings, List<ItemStatus> itemStatuses, List<ItemType> itemTypes)
+        public ItemDetails(List<Building> buildings, List<ItemStatu> itemStatuses, List<ItemType> itemTypes)
         {
             InitializeComponent();
             lsBuilding = buildings;
@@ -47,32 +41,32 @@ namespace WindowsFormsApp1
             }
             else
             {
-                cbStatus.SelectedIndex=0;
+                cbStatus.SelectedIndex = 0;
                 cbStatus.Enabled = false;
             }
         }
 
         private void loadData()
         {
-           
+
             // loadBuilding
             foreach (Building building in lsBuilding)
             {
                 cbBuilding.Items.Add(building.Name.Trim());
-            }            
+            }
 
             // loadStatus
-            foreach (ItemStatus itemStatus in lsItemStatus)
+            foreach (ItemStatu itemStatus in lsItemStatus)
             {
                 cbStatus.Items.Add(itemStatus.Status.Trim());
-            }            
+            }
 
             // loadTypes
             foreach (ItemType itemType in lsItemTypes)
             {
                 cbType.Items.Add(itemType.name.Trim());
-            }           
-            
+            }
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -95,14 +89,14 @@ namespace WindowsFormsApp1
                     item = db.Items.Find(item.ID);
                 }
 
-                if(item != null)
+                if (item != null)
                 {
                     if (cbBuilding.SelectedIndex != -1) { item.BuildingID = cbBuilding.SelectedIndex; }
                     if (cbStatus.SelectedIndex != -1) { item.itemStatusID = cbStatus.SelectedIndex; }
                     if (cbType.SelectedIndex != -1) { item.itemTypeID = cbType.SelectedIndex; }
-                    if(create)
+                    if (create)
                     {
-                         db.Items.Add(item);
+                        db.Items.Add(item);
                     }
                     db.SaveChanges();
                 }

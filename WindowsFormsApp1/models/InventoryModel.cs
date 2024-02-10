@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindowsFormsApp1.models;
 
 namespace WindowsFormsApp1
-{    
+{
     public class InventoryModel
     {
         public List<BuildingModel> buildings = new List<BuildingModel>();
@@ -15,11 +12,12 @@ namespace WindowsFormsApp1
         public List<ItemStatusModel> itemStatuses = new List<ItemStatusModel>();
         public List<ItemTypeModel> itemTypes = new List<ItemTypeModel>();
 
-        public InventoryModel() {
+        public InventoryModel()
+        {
             //getBuildings();
             getitemStatuses();
             getitemTypes();
-            
+
 
         }
 
@@ -39,7 +37,7 @@ namespace WindowsFormsApp1
                         int ID = Convert.ToInt32(reader["id"]);
                         String Name = Convert.ToString(reader["Name"]);
                         String Address = Convert.ToString(reader["Address"]);
-                        buildings.Add(new BuildingModel(ID,Name,Address));
+                        buildings.Add(new BuildingModel(ID, Name, Address));
                     }
                 }
                 finally

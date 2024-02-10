@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.ADO;
-using WindowsFormsApp1.Properties;
 
 namespace WindowsFormsApp1
 {
@@ -22,12 +13,15 @@ namespace WindowsFormsApp1
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            using(Entity db = new Entity())
+            using (Entity db = new Entity())
             {
                 Employee employee = db.Employees.Find(txtEmployeeID.Text);
                 if (employee != null)
                 {
-                    if(employee.Password.Trim() == txtPassword.Text.Trim())
+                    // PasswordHasher<Employee> passwordHasher = new PasswordHasher<Employee>();
+                    // String HashedPWD = passwordHasher.HashPassword(employee, employee.Password);
+
+                    if (employee.Password.Trim() == txtPassword.Text.Trim())
                     {
                         MessageBox.Show("Loggin in :)");
                         this.Hide();
