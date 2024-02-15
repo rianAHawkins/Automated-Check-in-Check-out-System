@@ -56,6 +56,37 @@ namespace WindowsFormsApp1
             return employee.getDBEmployee(txtPassword.Text);
         }
 
+        public class AccountController : Controller
+        {
+            private readonly UserManager<IdentityUser> _userManager;
+
+            public AccountController(UserManager<IdentityUser> userManager)
+            {
+                _userManager = userManager;
+            }
+
+            public async Task<IActionResult> Register(string username, string password)
+            {
+                var user = new IdentityUser { UserName = username };
+                var result = await _userManager.CreateAsync(user, password);
+
+                if (result.Succeeded)
+                {
+                    // User was created successfully.
+                }
+                else
+                {
+                    // There was an error creating the user.
+                }
+
+                return View();
+            }
+
+            private IActionResult View()
+            {
+                throw new NotImplementedException();
+            }
+        }
 
 
         /// <summary>
@@ -380,6 +411,14 @@ namespace WindowsFormsApp1
                 buffer[offset + 3] = (byte)(value >> 0);
             }
         }
+    }
+
+    public interface IActionResult
+    {
+    }
+
+    public class Controller
+    {
     }
 }
 
